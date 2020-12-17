@@ -113,17 +113,6 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	vec3 positionToLook;
-	positionToLook.x = vehicle->vehicle->getRigidBody()->getWorldTransform().getOrigin().x();
-	positionToLook.y = vehicle->vehicle->getRigidBody()->getWorldTransform().getOrigin().y();
-	positionToLook.z = vehicle->vehicle->getRigidBody()->getWorldTransform().getOrigin().z();
-	/*App->camera->LookAt(positionToLook);*/
-
-	vec3 positionToFollow = positionToLook;
-	positionToFollow.z -= 20;
-	positionToFollow.y += 10;
-
-	App->camera->Look(positionToFollow, positionToLook, true);
 
 	turn = acceleration = brake = 0.0f;
 
@@ -159,12 +148,23 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Brake(brake);
 
 	vehicle->Render();
-
+	CameraFollow();
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::CameraFollow()
+{
+	carPos = vehicle->vehicle->getChassisWorldTransform();
+	initialCarPos = { carPos.getOrigin().getX(),carPos.getOrigin().getY(),carPos.getOrigin().getZ() };
+	carDir = { carPos.getBasis().getColumn(2).getX(),carPos.getBasis().getColumn(2).getY(),carPos.getBasis().getColumn(2).getZ() };
+	App->camera->Position = cameraPos;
+	cameraPos = initialCarPos - 15 * carDir;
+	App->camera->Position.y = initialCarPos.y + 8;
+	App->camera->Look(App->camera->Position, initialCarPos, true);
 }
 
 
