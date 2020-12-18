@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 1, 10);
 	
 	return true;
 }
@@ -140,6 +140,9 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
+		float toGround;
+
+		if(vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
 		vehicle->Jump(100000.0f);
 	}
 
@@ -164,8 +167,4 @@ void ModulePlayer::CameraFollow()
 	App->camera->Position = cameraPos;
 	cameraPos = initialCarPos - 15 * carDir;
 	App->camera->Position.y = initialCarPos.y + 8;
-	
 }
-
-
-

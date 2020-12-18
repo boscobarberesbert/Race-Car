@@ -19,12 +19,14 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	void CameraFollow();
+
 public:
 
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
 	btTransform carPos;
 	vec3 initialCarPos = { 0,0,0 };
 	vec3 carDir = { 0,0,0 };
