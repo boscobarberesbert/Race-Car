@@ -95,6 +95,10 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position = Reference + Z * length(Position);
 	}
+	else
+	{
+		Look(Position, App->player->initialCarPos, true);
+	}
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();

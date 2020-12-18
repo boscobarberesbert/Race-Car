@@ -164,7 +164,7 @@ void ModulePlayer::CameraFollow()
 	App->camera->Position = cameraPos;
 	cameraPos = initialCarPos - 15 * carDir;
 	App->camera->Position.y = initialCarPos.y + 8;
-	App->camera->Look(App->camera->Position, initialCarPos, true);
+	
 }
 
 
