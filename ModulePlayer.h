@@ -19,6 +19,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	void CameraFollow();
+	void ResetPosition();
+
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
 
@@ -31,4 +34,8 @@ public:
 	vec3 initialCarPos = { 0,0,0 };
 	vec3 carDir = { 0,0,0 };
 	vec3 cameraPos = { 0,0,0 };
+
+private:
+
+	float* initialTransf;
 };

@@ -98,6 +98,10 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 1, 10);
+	vehicle->collision_listeners.add(this);
+
+	initialTransf = new float[16];
+	vehicle->GetTransform(initialTransf);
 	
 	return true;
 }
@@ -142,8 +146,13 @@ update_status ModulePlayer::Update(float dt)
 	{
 		float toGround;
 
-		if(vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
-		vehicle->Jump(100000.0f);
+		if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
+			vehicle->Jump(100000.0f);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
+	{
+		ResetPosition();
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -167,4 +176,17 @@ void ModulePlayer::CameraFollow()
 	App->camera->Position = cameraPos;
 	cameraPos = initialCarPos - 15 * carDir;
 	App->camera->Position.y = initialCarPos.y + 8;
+}
+
+void ModulePlayer::ResetPosition()
+{
+	vehicle->SetTransform(initialTransf);
+}
+
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	if (body1->isSensor || body2->isSensor)
+	{
+		ResetPosition();
+	}
 }
