@@ -89,7 +89,7 @@ void ModuleSceneIntro::CreateCircuit()
 	App->physics->AddBody(*rampDown, 0.0f, false);
 
 	Cube* finishLine = new Cube(30, 20, 5);
-	finishLine->SetPos(0, 10, 18); //180
+	finishLine->SetPos(0, 10, 180);
 	primitives.PushBack(finishLine);
 	App->physics->AddBody(*finishLine, 0.0f, true)->collision_listeners.add(this);
 	finishLine->color = { 0.0,1.0,0.0,1.0 };
