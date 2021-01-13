@@ -90,14 +90,14 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 			if(pbodyA && pbodyB)
 			{
 				p2List_item<Module*>* item = pbodyA->collision_listeners.getFirst();
-				while(item)
+				while(item && item->data != nullptr)
 				{
 					item->data->OnCollision(pbodyA, pbodyB);
 					item = item->next;
 				}
 
 				item = pbodyB->collision_listeners.getFirst();
-				while(item)
+				while(item && item->data != nullptr)
 				{
 					item->data->OnCollision(pbodyB, pbodyA);
 					item = item->next;
@@ -192,7 +192,7 @@ bool ModulePhysics3D::CleanUp()
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool isSensor, Module* module)
 {
 	btCollisionShape* colShape = new btSphereShape(sphere.radius);
 	shapes.add(colShape);
@@ -216,15 +216,16 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool isSe
 	bodies.add(pbody);
 
 	pbody->ChangeSensor(isSensor);
+	pbody->collision_listeners.add(module);
 
 	return pbody;
 }
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool isSensor, Module* module)
 {
-	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
+	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
 	shapes.add(colShape);
 
 	btTransform startTransform;
@@ -246,14 +247,15 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool isSensor
 	bodies.add(pbody);
 
 	pbody->ChangeSensor(isSensor);
+	pbody->collision_listeners.add(module);
 
 	return pbody;
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool isSensor, Module* module)
 {
-	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height*0.5f, cylinder.radius, 0.0f));
+	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height * 0.5f, cylinder.radius, 0.0f));
 	shapes.add(colShape);
 
 	btTransform startTransform;
@@ -275,6 +277,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool 
 	bodies.add(pbody);
 
 	pbody->ChangeSensor(isSensor);
+	pbody->collision_listeners.add(module);
 
 	return pbody;
 }
@@ -332,6 +335,7 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	// ---------------------
 
 	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
+	body->setUserPointer(pvehicle);
 	world->addVehicle(vehicle);
 	vehicles.add(pvehicle);
 

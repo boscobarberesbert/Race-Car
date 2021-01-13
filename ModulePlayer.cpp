@@ -181,6 +181,7 @@ void ModulePlayer::CameraFollow()
 void ModulePlayer::ResetPosition()
 {
 	vehicle->SetTransform(initialTransf);
+	vehicle->Brake(10000000.0f);
 }
 
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
