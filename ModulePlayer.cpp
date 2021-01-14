@@ -98,7 +98,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 1, 10);
-	vehicle->collision_listeners.add(this);
+	//vehicle->collision_listeners.add(this);
 
 	initialTransf = new float[16];
 	vehicle->GetTransform(initialTransf);
