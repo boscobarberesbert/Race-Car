@@ -21,7 +21,7 @@ public:
 	void CameraFollow();
 	void ResetPosition();
 
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	//void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
 

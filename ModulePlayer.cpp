@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 1, 10);
+	vehicle->SetPos(0.0f, 0.5f, 10.0f);
 	//vehicle->collision_listeners.add(this);
 
 	initialTransf = new float[16];
@@ -117,7 +117,6 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-
 	turn = acceleration = brake = 0.0f;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -159,8 +158,10 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	vehicle->Render();
 	CameraFollow();
+
+	vehicle->Render();
+
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
@@ -181,13 +182,12 @@ void ModulePlayer::CameraFollow()
 void ModulePlayer::ResetPosition()
 {
 	vehicle->SetTransform(initialTransf);
-	vehicle->Brake(10000000.0f);
 }
 
-void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
-	if (body1->isSensor || body2->isSensor)
-	{
-		ResetPosition();
-	}
-}
+//void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+//{
+//	if (body1->isSensor || body2->isSensor)
+//	{
+//		ResetPosition();
+//	}
+//}
