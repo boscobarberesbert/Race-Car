@@ -192,7 +192,7 @@ bool ModulePhysics3D::CleanUp()
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, bool isSensor, Module* module)
 {
 	btCollisionShape* colShape = new btSphereShape(sphere.radius);
 	shapes.add(colShape);
@@ -218,12 +218,14 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass, bool isSe
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
 
+	sphere.body = pbody;
+
 	return pbody;
 }
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, bool isSensor, Module* module)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
 	shapes.add(colShape);
@@ -249,11 +251,13 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, bool isSensor
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
 
+	cube.body = pbody;
+
 	return pbody;
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, bool isSensor, Module* module)
 {
 	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height * 0.5f, cylinder.radius, 0.0f));
 	shapes.add(colShape);
@@ -278,6 +282,8 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass, bool 
 
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
+
+	cylinder.body = pbody;
 
 	return pbody;
 }

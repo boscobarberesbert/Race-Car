@@ -39,6 +39,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	for (int i = 0; i < primitives.Count(); i++)
 	{
+		primitives[i]->Update();
 		primitives[i]->Render();
 	}
 
@@ -93,4 +94,9 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(finishLine);
 	App->physics->AddBody(*finishLine, 0.0f, true, this);
 	finishLine->color = { 0.0,1.0,0.0,1.0 };
+
+	Sphere* sphere = new Sphere(10);
+	sphere->SetPos(0, 50, 25);
+	primitives.PushBack(sphere);
+	App->physics->AddBody(*sphere, 1.0f, false);
 }
