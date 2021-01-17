@@ -21,9 +21,9 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 4);
+	car.chassis_size.Set(3.5, 1.5, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
-	car.mass = 500.0f;
+	car.mass = 300.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -138,15 +138,15 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump == true)
 	{
 		float toGround;
 
 		if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
-			vehicle->Jump(100000.0f);
+			vehicle->Jump(50000.0f);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
@@ -183,11 +183,3 @@ void ModulePlayer::ResetPosition()
 {
 	vehicle->SetTransform(initialTransf);
 }
-
-//void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-//{
-//	if (body1->isSensor || body2->isSensor)
-//	{
-//		ResetPosition();
-//	}
-//}

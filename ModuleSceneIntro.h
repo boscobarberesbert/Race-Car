@@ -44,4 +44,7 @@ public:
 	PhysMotor3D* right_wheel;
 
 	p2DynArray<Primitive*> primitives;
+
+	// Map traps
+	bool balls = false;
 };
