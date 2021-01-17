@@ -318,6 +318,22 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(platform16);
 	App->physics->AddBody(*platform16, 0.0f, true, this);
 
+	// Balls for constraints links
+	//28
+	Sphere* sphere = new Sphere(1);
+	sphere->SetPos(0, 25, 90);
+	primitives.PushBack(sphere);
+	App->physics->AddBody(*sphere, 0.0f, false);
+
+	//29
+	Sphere* sphere2 = new Sphere(2.5);
+	sphere2->SetPos(0, 20, 90);
+	primitives.PushBack(sphere2);
+	App->physics->AddBody(*sphere2, 100.0f, false);
+	sphere2->body->Push(1000.0f, 0.0f, 0.0f);
+
+	App->physics->AddConstraintP2P(*sphere->body, *sphere2->body, vec3{ 0, 0, 0 }, vec3{ sphere->transform.translation().x - sphere2->transform.translation().x, sphere->transform.translation().y - sphere2->transform.translation().y, sphere->transform.translation().z - sphere2->transform.translation().z });
+
 	// Reset / Checkpoint
 	/*Cube* finishLine = new Cube(30, 20, 5);
 	finishLine->SetPos(0, 10, 180);

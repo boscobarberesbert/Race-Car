@@ -22,6 +22,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	void CreateCircuit();
+
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
