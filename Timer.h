@@ -9,18 +9,29 @@ class Timer
 public:
 
 	// Constructor
-	Timer();
+	Timer()
+	{
+		Start();
+	}
 
-	void Start();
-	void Stop();
+	void Start()
+	{
+		startTime = SDL_GetTicks();
+	}
 
-	Uint32 Read();
+	Uint32 Read() const
+	{
+		return SDL_GetTicks() - startTime;
+	}
+
+	float ReadSec() const
+	{
+		return float(SDL_GetTicks() - startTime) / 1000.0f;
+	}
 
 private:
 
-	bool	running;
-	Uint32	started_at;
-	Uint32	stopped_at;
+	Uint32 startTime;
 };
 
 #endif //__TIMER_H__

@@ -28,6 +28,8 @@ Application::Application()
 
 	// Renderer last!
 	AddModule(renderer3D);
+
+	debug = false;
 }
 
 Application::~Application()
@@ -64,20 +66,46 @@ bool Application::Init()
 		item = item->next;
 	}
 	
-	ms_timer.Start();
+	cappedMs = 1000 / 60;
+
 	return ret;
 }
 
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	lastSecFrameCount++;
+
+	dt = frameTimer.ReadSec();
+	frameTimer.Start();
+
+	if (input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		debug = !debug;
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (lastSecFrameTimer.Read() > 1000)
+	{
+		lastSecFrameTimer.Start();
+		prevLastSecFrameCount = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
+
+	Uint32 lastFrameMs = frameTimer.Read();
+	Uint32 framesOnLastSec = prevLastSecFrameCount;
+
+	static char titleDebug[256];
+	sprintf_s(titleDebug, 256, "| Last Second frames: %i | Last Frame Ms: %02u | Last dt: %.3f | Framerate Cap: %d |", framesOnLastSec, lastFrameMs, dt, (1000 / cappedMs));
+
+	if (debug)
+		window->SetTitle(titleDebug);
+
+	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
+	{
+		SDL_Delay(cappedMs - lastFrameMs);
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

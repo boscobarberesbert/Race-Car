@@ -27,8 +27,16 @@ public:
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
+	Timer frameTimer;
+	Timer lastSecFrameTimer;
+	float dt = 0.0f;
+	int	cappedMs = -1;
+
+	Uint32 lastSecFrameCount = 0;
+	Uint32 prevLastSecFrameCount = 0;
+
+	bool debug = false;
+
 	p2List<Module*> list_modules;
 
 public:
