@@ -17,11 +17,22 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 
 |Key|Action|
 |---|------|
-|Arrow Up|Move Forward|
-|Arrow Left|Move Left|
-|Arrow Right|Move Right|
-|Arrow Down|Use Brakes|
-|Space|Jump|
+|W|Accelerate Forward|
+|A|Turn Left|
+|S|Accelerate Backward|
+|D|Turn Right|
+|🡳|Hand Brake|
+|🡰|Rotate Left (Torque)|
+|🡲|Rotate Right (Torque)|
+|ESC|Quit Game|
+
+### DEBUG Keys
+
+|Key|Action|
+|---|------|
+|F1|Physics Debug View|
+|F2|Framerate Debug Window Title|
+|F3|Reset Level|
 
 ## Developers
 
