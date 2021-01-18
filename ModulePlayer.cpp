@@ -156,13 +156,21 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,1000.0f });
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f,0.0f,0.0f });
 	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,-1000.0f });
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ -500.0f,0.0f,0.0f });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,-500.0f });
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,500.0f });
 	}
 
 	// TORQUE
