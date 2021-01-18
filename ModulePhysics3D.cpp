@@ -192,7 +192,7 @@ bool ModulePhysics3D::CleanUp()
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, BodyType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btSphereShape(sphere.radius);
 	shapes.add(colShape);
@@ -201,7 +201,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, bool isSensor, 
 	startTransform.setFromOpenGLMatrix(&sphere.transform);
 
 	btVector3 localInertia(0, 0, 0);
-	if(mass != 0.f)
+	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
@@ -215,6 +215,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, bool isSensor, 
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
+	pbody->type = type;
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
 
@@ -225,7 +226,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, bool isSensor, 
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, BodyType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
 	shapes.add(colShape);
@@ -248,6 +249,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, bool isSensor, Modu
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
+	pbody->type = type;
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
 
@@ -257,7 +259,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, bool isSensor, Modu
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, bool isSensor, Module* module)
+PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, BodyType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height * 0.5f, cylinder.radius, 0.0f));
 	shapes.add(colShape);
@@ -266,7 +268,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, bool isSens
 	startTransform.setFromOpenGLMatrix(&cylinder.transform);
 
 	btVector3 localInertia(0, 0, 0);
-	if(mass != 0.f)
+	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
@@ -280,6 +282,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, bool isSens
 	world->addRigidBody(body);
 	bodies.add(pbody);
 
+	pbody->type = type;
 	pbody->ChangeSensor(isSensor);
 	pbody->collision_listeners.add(module);
 

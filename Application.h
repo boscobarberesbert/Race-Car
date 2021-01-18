@@ -25,6 +25,7 @@ public:
 	ModulePhysics3D* physics;
 	ModulePlayer* player;
 
+	bool debug = false;
 private:
 
 	Timer frameTimer;
@@ -34,8 +35,6 @@ private:
 
 	Uint32 lastSecFrameCount = 0;
 	Uint32 prevLastSecFrameCount = 0;
-
-	bool debug = false;
 
 	p2List<Module*> list_modules;
 

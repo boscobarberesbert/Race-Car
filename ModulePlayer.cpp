@@ -98,10 +98,12 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0.0f, 0.5f, 10.0f);
-	//vehicle->collision_listeners.add(this);
+	vehicle->collision_listeners.add(this);
 
 	initialTransf = new float[16];
 	vehicle->GetTransform(initialTransf);
+
+	jumpCooldown.Start();
 	
 	return true;
 }
@@ -119,37 +121,56 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if(turn < TURN_DEGREES)
 			turn +=  TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if(turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump == true)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCooldown.ReadSec() >= 2.0f)
 	{
-		float toGround;
-
 		if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
 			vehicle->Jump(50000.0f);
+
+		jumpCooldown.Start();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		brake = BRAKE_POWER;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,1000.0f });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f,0.0f,-1000.0f });
+	}
+
+	// TORQUE
+	// X: Front / Back
+	// Y: Horizontal
+	// Z: Sideways
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 	{
 		ResetPosition();
 	}
@@ -164,7 +185,8 @@ update_status ModulePlayer::Update(float dt)
 
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
+	if(!App->debug)
+		App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
@@ -182,4 +204,15 @@ void ModulePlayer::CameraFollow()
 void ModulePlayer::ResetPosition()
 {
 	vehicle->SetTransform(initialTransf);
+}
+
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	if (App->scene_intro->spawnedBalls)
+	{
+		if (body2->type == BodyType::BALL)
+		{
+			lifes--;
+		}
+	}
 }

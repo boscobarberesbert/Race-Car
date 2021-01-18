@@ -6,6 +6,15 @@
 class btRigidBody;
 class Module;
 
+enum BodyType
+{
+	UNKNOWN,
+	TUBE_SENSOR,
+	SPAWN_SENSOR,
+	BALL,
+	FINISH
+};
+
 // =================================================
 struct PhysBody3D
 {
@@ -26,7 +35,9 @@ private:
 public:
 	p2List<Module*> collision_listeners;
 
-	bool isSensor;
+	bool isSensor = false;
+
+	uint type = BodyType::UNKNOWN;
 };
 
 #endif // __PhysBody3D_H__

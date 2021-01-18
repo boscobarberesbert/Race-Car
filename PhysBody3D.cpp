@@ -4,7 +4,11 @@
 
 // =================================================
 PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
-{}
+{
+	isSensor = false;
+
+	type = BodyType::UNKNOWN;
+}
 
 // ---------------------------------------------------------
 PhysBody3D::~PhysBody3D()

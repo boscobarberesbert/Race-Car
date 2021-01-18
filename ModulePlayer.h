@@ -7,7 +7,7 @@ struct PhysVehicle3D;
 
 #define MAX_ACCELERATION 1200.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
-#define BRAKE_POWER 1000.0f
+#define BRAKE_POWER 500.0f
 
 class ModulePlayer : public Module
 {
@@ -21,7 +21,7 @@ public:
 	void CameraFollow();
 	void ResetPosition();
 
-	//void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
 
@@ -35,10 +35,11 @@ public:
 	vec3 carDir = { 0,0,0 };
 	vec3 cameraPos = { 0,0,0 };
 
-	bool canJump = true;
 	int lifes = 3;
 
 private:
 
 	float* initialTransf;
+
+	Timer jumpCooldown;
 };

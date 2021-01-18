@@ -79,7 +79,7 @@ void Application::PrepareUpdate()
 	dt = frameTimer.ReadSec();
 	frameTimer.Start();
 
-	if (input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		debug = !debug;
 }
 
