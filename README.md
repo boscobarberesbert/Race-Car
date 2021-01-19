@@ -6,10 +6,11 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 
 ## Key Features
 
- - Scenario and ground.
+ - Scenario and ground, with platforms and traps.
  - The world has gravity.
  - Car moves with player input.
  - Camera follows the movement of the car.
+ - Constraints for some elements in the level.
 
 ## Controls
 
@@ -18,9 +19,9 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 |Key|Action|
 |---|------|
 |W|Accelerate Forward|
-|A|Turn Left|
+|A|Turn Left (Rotate in mid-air)|
 |S|Accelerate Backward|
-|D|Turn Right|
+|D|Turn Right (Rotate in mid-air)|
 |🡳|Hand Brake|
 |🡰|Rotate Left (Torque)|
 |🡲|Rotate Right (Torque)|
