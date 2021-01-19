@@ -57,7 +57,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		primitives[18]->wire = true;
 		primitives[19]->wire = true;
 	}
-	else if (body1->type == ElementType::SPAWN_SENSOR && body1->isSensor && spawnedBalls1 == false)
+	else if (body1->type == ElementType::SPAWN_SENSOR_RAMP && body1->isSensor && spawnedBalls1 == false)
 	{
 		Sphere* sphere = new Sphere(2.5);
 		sphere->SetPos(230, 25, 90);
@@ -91,7 +91,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 		spawnedBalls1 = true;
 	}
-	else if (body1->type == ElementType::SPAWN_SENSOR && body1->isSensor && spawnedBalls2 == false)
+	else if (body1->type == ElementType::SPAWN_SENSOR_RAIL && body1->isSensor && spawnedBalls2 == false)
 	{
 		Sphere* sphere6 = new Sphere(2);
 		sphere6->SetPos(210, 24, -55);
@@ -311,7 +311,7 @@ void ModuleSceneIntro::CreateCircuit()
 	platform16->SetPos(210, 5, 155);
 	platform16->wire = true;
 	primitives.PushBack(platform16);
-	App->physics->AddBody(*platform16, 0.0f, ElementType::SPAWN_SENSOR, this, true);
+	App->physics->AddBody(*platform16, 0.0f, ElementType::SPAWN_SENSOR_RAMP, this, true);
 
 	// Balls for constraints links
 	// 28
@@ -345,7 +345,7 @@ void ModuleSceneIntro::CreateCircuit()
 	platform17->SetPos(210, 5, 5);
 	platform17->wire = true;
 	primitives.PushBack(platform17);
-	App->physics->AddBody(*platform17, 0.0f, ElementType::SPAWN_SENSOR, this, true);
+	App->physics->AddBody(*platform17, 0.0f, ElementType::SPAWN_SENSOR_RAIL, this, true);
 
 	// Rails
 	Cube* rail = new Cube(1, 1, 15);
