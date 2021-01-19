@@ -97,13 +97,14 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
+	
+	//vehicle->SetPos(210, 5, 10);
 	vehicle->SetPos(0.0f, 0.5f, 10.0f);
+
 	vehicle->collision_listeners.add(this);
 
 	initialTransf = new float[16];
 	vehicle->GetTransform(initialTransf);
-
-	jumpCooldown.Start();
 	
 	return true;
 }
@@ -132,15 +133,15 @@ update_status ModulePlayer::Update(float dt)
 			turn +=  TURN_DEGREES;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		acceleration = -MAX_ACCELERATION;
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if(turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		acceleration = -MAX_ACCELERATION;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCooldown.ReadSec() >= 2.0f)
@@ -149,6 +150,16 @@ update_status ModulePlayer::Update(float dt)
 			vehicle->Jump(50000.0f);
 
 		jumpCooldown.Start();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && jumpCooldown.ReadSec() < 2.0f)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, 10.0f, 0.0f });
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && jumpCooldown.ReadSec() < 2.0f)
+	{
+		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, -10.0f, 0.0f });
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -160,17 +171,13 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ -500.0f * vehicle->vehicle->getForwardVector().getX(), -500.0f * vehicle->vehicle->getForwardVector().getY(), -500.0f * vehicle->vehicle->getForwardVector().getZ() });
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f * vehicle->vehicle->getForwardVector().getX(), 500.0f * vehicle->vehicle->getForwardVector().getY(), 500.0f * vehicle->vehicle->getForwardVector().getZ() });
 	}
 
-	// TORQUE
-	// X: Front / Back
-	// Y: Horizontal
-	// Z: Sideways
-
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		ResetPosition();
 	}
@@ -198,21 +205,20 @@ void ModulePlayer::CameraFollow()
 	carDir = { carPos.getBasis().getColumn(2).getX(),carPos.getBasis().getColumn(2).getY(),carPos.getBasis().getColumn(2).getZ() };
 	App->camera->Position = cameraPos;
 	cameraPos = initialCarPos - 15 * carDir;
-	App->camera->Position.y = initialCarPos.y + 8;
+	App->camera->Position.y = initialCarPos.y + 5;
 }
 
 void ModulePlayer::ResetPosition()
 {
 	vehicle->SetTransform(initialTransf);
+	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0.0f,0.0f,0.0f });
+	vehicle->vehicle->resetSuspension();
 }
 
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (App->scene_intro->spawnedBalls)
+	if (body2->type == ElementType::DAMAGE)
 	{
-		if (body2->type == BodyType::BALL)
-		{
-			lifes--;
-		}
+		ResetPosition();
 	}
 }

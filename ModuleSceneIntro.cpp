@@ -6,6 +6,8 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	spawnedBalls1 = false;
+	spawnedBalls2 = false;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -48,46 +50,56 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1->type == BodyType::TUBE_SENSOR && body1->isSensor)
+	if (body1->type == ElementType::TUBE_SENSOR && body1->isSensor)
 	{
 		primitives[16]->wire = true;
 		primitives[17]->wire = true;
 		primitives[18]->wire = true;
 		primitives[19]->wire = true;
 	}
-	else if (body1->type == BodyType::SPAWN_SENSOR && body1->isSensor && spawnedBalls == false)
+	else if (body1->type == ElementType::SPAWN_SENSOR && body1->isSensor && spawnedBalls1 == false)
 	{
 		Sphere* sphere = new Sphere(2.5);
 		sphere->SetPos(230, 25, 90);
 		primitives.PushBack(sphere);
-		App->physics->AddBody(*sphere, 10.0f, BodyType::BALL);
+		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE);
 		sphere->color = { 1,0,0,1 };
 
 		Sphere* sphere2 = new Sphere(2.5);
 		sphere2->SetPos(220, 25, 90);
 		primitives.PushBack(sphere2);
-		App->physics->AddBody(*sphere2, 10.0f, BodyType::BALL);
+		App->physics->AddBody(*sphere2, 10.0f, ElementType::DAMAGE);
 		sphere2->color = { 1,0,0,1 };
 
 		Sphere* sphere3 = new Sphere(2.5);
 		sphere3->SetPos(210, 25, 90);
 		primitives.PushBack(sphere3);
-		App->physics->AddBody(*sphere3, 10.0f, BodyType::BALL);
+		App->physics->AddBody(*sphere3, 10.0f, ElementType::DAMAGE);
 		sphere3->color = { 1,0,0,1 };
 
 		Sphere* sphere4 = new Sphere(2.5);
 		sphere4->SetPos(200, 25, 90);
 		primitives.PushBack(sphere4);
-		App->physics->AddBody(*sphere4, 10.0f, BodyType::BALL);
+		App->physics->AddBody(*sphere4, 10.0f, ElementType::DAMAGE);
 		sphere4->color = { 1,0,0,1 };
 
 		Sphere* sphere5 = new Sphere(2.5);
 		sphere5->SetPos(190, 25, 90);
 		primitives.PushBack(sphere5);
-		App->physics->AddBody(*sphere5, 10.0f, BodyType::BALL);
+		App->physics->AddBody(*sphere5, 10.0f, ElementType::DAMAGE);
 		sphere5->color = { 1,0,0,1 };
 
-		spawnedBalls = true;
+		spawnedBalls1 = true;
+	}
+	else if (body1->type == ElementType::SPAWN_SENSOR && body1->isSensor && spawnedBalls2 == false)
+	{
+		Sphere* sphere6 = new Sphere(2);
+		sphere6->SetPos(210, 24, -55);
+		primitives.PushBack(sphere6);
+		App->physics->AddBody(*sphere6, 10.0f, ElementType::DAMAGE);
+		sphere6->color = { 1,0,0,1 };
+
+		spawnedBalls2 = true;
 	}
 }
 
@@ -258,7 +270,7 @@ void ModuleSceneIntro::CreateCircuit()
 	tubeSensor->SetPos(210, 5, 175);
 	tubeSensor->wire = true;
 	primitives.PushBack(tubeSensor);
-	App->physics->AddBody(*tubeSensor, 0.0f, BodyType::TUBE_SENSOR, this, true);
+	App->physics->AddBody(*tubeSensor, 0.0f, ElementType::TUBE_SENSOR, this, true);
 
 	// 22
 	// Bounds
@@ -299,23 +311,93 @@ void ModuleSceneIntro::CreateCircuit()
 	platform16->SetPos(210, 5, 155);
 	platform16->wire = true;
 	primitives.PushBack(platform16);
-	App->physics->AddBody(*platform16, 0.0f, BodyType::SPAWN_SENSOR, this, true);
+	App->physics->AddBody(*platform16, 0.0f, ElementType::SPAWN_SENSOR, this, true);
 
 	// Balls for constraints links
-	//28
+	// 28
 	Sphere* sphere = new Sphere(1);
-	sphere->SetPos(0, 25, 90);
+	sphere->SetPos(0, 28, 90);
 	primitives.PushBack(sphere);
-	App->physics->AddBody(*sphere, 0.0f);
+	App->physics->AddBody(*sphere, 0.0f, ElementType::DAMAGE);
+	sphere->color = { 1,0,0,1 };
 
-	//29
+	// 29
 	Sphere* sphere2 = new Sphere(2.5);
 	sphere2->SetPos(0, 20, 90);
 	primitives.PushBack(sphere2);
-	App->physics->AddBody(*sphere2, 100.0f);
+	App->physics->AddBody(*sphere2, 100.0f, ElementType::DAMAGE);
 	sphere2->body->Push(1000.0f, 0.0f, 0.0f);
+	sphere2->color = { 1,0,0,1 };
 
-	App->physics->AddConstraintP2P(*sphere->body, *sphere2->body, vec3{ 0, 0, 0 }, vec3{ sphere->transform.translation().x - sphere2->transform.translation().x, sphere->transform.translation().y - sphere2->transform.translation().y, sphere->transform.translation().z - sphere2->transform.translation().z });
+	// Platforms to jump
+	Cube* platform3 = new Cube(15, 1, 15);
+	platform3->SetPos(210, 20, 25);
+	primitives.PushBack(platform3);
+	App->physics->AddBody(*platform3, 0.0f);
+
+	Cube* platform4 = new Cube(15, 1, 25);
+	platform4->SetPos(210, 5, 10);
+	primitives.PushBack(platform4);
+	App->physics->AddBody(*platform4, 0.0f);
+
+	// Sensor to spawn trap ball
+	Cube* platform17 = new Cube(5, 5, 1);
+	platform17->SetPos(210, 5, 5);
+	platform17->wire = true;
+	primitives.PushBack(platform17);
+	App->physics->AddBody(*platform17, 0.0f, ElementType::SPAWN_SENSOR, this, true);
+
+	// Rails
+	Cube* rail = new Cube(1, 1, 15);
+	rail->SetPos(208.5, 5, -10);
+	primitives.PushBack(rail);
+	App->physics->AddBody(*rail, 0.0f);
+
+	Cube* rail2 = new Cube(1, 1, 15);
+	rail2->SetPos(211.5, 5, -10);
+	primitives.PushBack(rail2);
+	App->physics->AddBody(*rail2, 0.0f);
+
+	Cube* rail3 = new Cube(1, 1, 45);
+	rail3->SetPos(208.5, 14.5, -37.5);
+	rail3->SetRotation(25, { 1,0,0 });
+	primitives.PushBack(rail3);
+	App->physics->AddBody(*rail3, 0.0f);
+
+	Cube* rail4 = new Cube(1, 1, 45);
+	rail4->SetPos(211.5, 14.5, -37.5);
+	rail4->SetRotation(25, { 1,0,0 });
+	primitives.PushBack(rail4);
+	App->physics->AddBody(*rail4, 0.0f);
+
+	// Mini platform after rails
+	Cube* platform5 = new Cube(7, 1, 13);
+	platform5->SetPos(210, 24, -64);
+	primitives.PushBack(platform5);
+	App->physics->AddBody(*platform5, 0.0f);
+
+	// Ending platform (?)
+	Cube* platform6 = new Cube(12, 1, 12);
+	platform6->SetPos(210, 15, -100);
+	primitives.PushBack(platform6);
+	App->physics->AddBody(*platform6, 0.0f);
+
+	// Balls for constraints links
+	Sphere* sphere3 = new Sphere(1);
+	sphere3->SetPos(210, 33, 45);
+	primitives.PushBack(sphere3);
+	App->physics->AddBody(*sphere3, 0.0f, ElementType::DAMAGE);
+	sphere3->color = { 1,0,0,1 };
+
+	Sphere* sphere4 = new Sphere(2.5);
+	sphere4->SetPos(210, 25, 45);
+	primitives.PushBack(sphere4);
+	App->physics->AddBody(*sphere4, 100.0f, ElementType::DAMAGE);
+	sphere4->body->Push(1000.0f, 0.0f, 0.0f);
+	sphere4->color = { 1,0,0,1 };
+
+	App->physics->AddConstraintP2P(*sphere->body, *sphere2->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere->transform.translation().x - sphere2->transform.translation().x, sphere->transform.translation().y - sphere2->transform.translation().y, sphere->transform.translation().z - sphere2->transform.translation().z });
+	App->physics->AddConstraintP2P(*sphere3->body, *sphere4->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere3->transform.translation().x - sphere4->transform.translation().x, sphere3->transform.translation().y - sphere4->transform.translation().y, sphere4->transform.translation().z - sphere4->transform.translation().z });
 
 	// Reset / Checkpoint
 	/*Cube* finishLine = new Cube(30, 20, 5);

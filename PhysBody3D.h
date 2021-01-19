@@ -6,12 +6,12 @@
 class btRigidBody;
 class Module;
 
-enum BodyType
+enum ElementType
 {
 	UNKNOWN,
 	TUBE_SENSOR,
 	SPAWN_SENSOR,
-	BALL,
+	DAMAGE,
 	FINISH
 };
 
@@ -37,7 +37,7 @@ public:
 
 	bool isSensor = false;
 
-	uint type = BodyType::UNKNOWN;
+	uint type = ElementType::UNKNOWN;
 };
 
 #endif // __PhysBody3D_H__

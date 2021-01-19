@@ -7,7 +7,7 @@ PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
 {
 	isSensor = false;
 
-	type = BodyType::UNKNOWN;
+	type = ElementType::UNKNOWN;
 }
 
 // ---------------------------------------------------------

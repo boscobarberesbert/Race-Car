@@ -192,7 +192,7 @@ bool ModulePhysics3D::CleanUp()
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, BodyType type, Module* module, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, ElementType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btSphereShape(sphere.radius);
 	shapes.add(colShape);
@@ -226,7 +226,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Sphere& sphere, float mass, BodyType type, 
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, BodyType type, Module* module, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, ElementType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
 	shapes.add(colShape);
@@ -259,7 +259,7 @@ PhysBody3D* ModulePhysics3D::AddBody(Cube& cube, float mass, BodyType type, Modu
 }
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, BodyType type, Module* module, bool isSensor)
+PhysBody3D* ModulePhysics3D::AddBody(Cylinder& cylinder, float mass, ElementType type, Module* module, bool isSensor)
 {
 	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height * 0.5f, cylinder.radius, 0.0f));
 	shapes.add(colShape);

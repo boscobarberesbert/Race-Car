@@ -47,5 +47,6 @@ public:
 	p2DynArray<Primitive*> primitives;
 
 	// Map traps
-	bool spawnedBalls = false;
+	bool spawnedBalls1 = false;
+	bool spawnedBalls2 = false;
 };
