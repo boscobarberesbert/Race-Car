@@ -99,7 +99,7 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	
 	//vehicle->SetPos(210, 5, 10);
-	vehicle->SetPos(0.0f, 0.5f, 10.0f);
+	vehicle->SetPos(0.0f, 0.0f, 5.0f);
 
 	vehicle->collision_listeners.add(this);
 
