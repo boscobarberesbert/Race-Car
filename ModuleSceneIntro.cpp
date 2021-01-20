@@ -423,74 +423,74 @@ void ModuleSceneIntro::CreateCircuit()
 
 	// Death catwalk
 	Cube* catwalk = new Cube(50, 1, 15);
-	catwalk->SetPos(150, 1, -100);
+	catwalk->SetPos(150, 11, -100);
 	primitives.PushBack(catwalk);
 	App->physics->AddBody(*catwalk, 0.0f);
 
 	// Square
 	Cube* square = new Cube(30, 1, 30);
-	square->SetPos(110, 1, -100);
+	square->SetPos(110, 11, -100);
 	primitives.PushBack(square);
 	App->physics->AddBody(*square, 0.0f);
 
 	// Death catwalk 2
 	Cube* catwalk2 = new Cube(50, 1, 15);
-	catwalk2->SetPos(70, 1, -100);
+	catwalk2->SetPos(70, 11, -100);
 	primitives.PushBack(catwalk2);
 	App->physics->AddBody(*catwalk2, 0.0f);
 
 	// Balls for constraints links
 	// 28
 	Sphere* sphere5 = new Sphere(1);
-	sphere5->SetPos(150, 35, -100);
+	sphere5->SetPos(150, 45, -100);
 	primitives.PushBack(sphere5);
 	App->physics->AddBody(*sphere5, 0.0f);
 
 	// 29
 	Sphere* sphere6 = new Sphere(2.5);
-	sphere6->SetPos(150, 5, -100);
+	sphere6->SetPos(150, 15, -100);
 	primitives.PushBack(sphere6);
 	App->physics->AddBody(*sphere6, 1000000.0f);
 	sphere6->body->Push(20000000.0f, 0.0f, 0.0f);
 	sphere6->color = { 1,1,0,1 };
 
 	Sphere* sphere7 = new Sphere(10);
-	sphere7->SetPos(110, 5, -100);
+	sphere7->SetPos(110, 15, -100);
 	primitives.PushBack(sphere7);
 	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE, this, true);
 	sphere7->color = { 1,0,0,1 };
 
 	Sphere* sphere8 = new Sphere(1);
-	sphere8->SetPos(90, 10, -100);
+	sphere8->SetPos(90, 20, -100);
 	primitives.PushBack(sphere8);
 	App->physics->AddBody(*sphere8, 0.0f);
 
 	Sphere* sphere9 = new Sphere(1.5);
-	sphere9->SetPos(90, 5, -100);
+	sphere9->SetPos(90, 15, -100);
 	primitives.PushBack(sphere9);
 	App->physics->AddBody(*sphere9, 10.0f, ElementType::DAMAGE, this, true);
 	sphere9->body->Push(0.0f, 0.0f, 1000.0f);
 	sphere9->color = { 1,0,0,1 };
 
 	Sphere* sphere10 = new Sphere(1);
-	sphere10->SetPos(70, 10, -100);
+	sphere10->SetPos(70, 20, -100);
 	primitives.PushBack(sphere10);
 	App->physics->AddBody(*sphere10, 0.0f);
 
 	Sphere* sphere11 = new Sphere(1.5);
-	sphere11->SetPos(70, 5, -100);
+	sphere11->SetPos(70, 15, -100);
 	primitives.PushBack(sphere11);
 	App->physics->AddBody(*sphere11, 10.0f, ElementType::DAMAGE, this, true);
 	sphere11->body->Push(0.0f, 0.0f, -1000.0f);
 	sphere11->color = { 1,0,0,1 };
 
 	Sphere* sphere12 = new Sphere(1);
-	sphere12->SetPos(50, 10, -100);
+	sphere12->SetPos(50, 20, -100);
 	primitives.PushBack(sphere12);
 	App->physics->AddBody(*sphere12, 0.0f);
 
 	Sphere* sphere13 = new Sphere(1.5);
-	sphere13->SetPos(50, 5, -100);
+	sphere13->SetPos(50, 15, -100);
 	primitives.PushBack(sphere13);
 	App->physics->AddBody(*sphere13, 10.0f, ElementType::DAMAGE, this, true);
 	sphere13->body->Push(0.0f, 0.0f, 1000.0f);
