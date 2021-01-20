@@ -3,6 +3,12 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+// For text:
+#include "Color.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include "glut/glut.h"
+
 struct PhysVehicle3D;
 
 #define MAX_ACCELERATION 1200.0f
@@ -22,6 +28,8 @@ public:
 	void ResetPosition();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+
+	void DrawTextHUD(float x, float y, float z, const char* text);
 
 public:
 

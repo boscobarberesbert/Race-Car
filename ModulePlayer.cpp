@@ -195,6 +195,15 @@ update_status ModulePlayer::Update(float dt)
 	if(!App->debug)
 		App->window->SetTitle(title);
 
+	char hud[80];
+	sprintf_s(hud, "HUD PLAYER");
+	DrawTextHUD(
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 1.3f, 
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f, 
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(), 
+		hud
+	);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -220,5 +229,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body2->type == ElementType::DAMAGE)
 	{
 		ResetPosition();
+	}
+}
+
+void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text)
+{
+	glColor4b(255.0f, 255.0f, 255.0f, 255.0f);
+	glRasterPos3f(x, y, z);
+	int textLength = strlen(text);
+
+	for (int i = 0; i < textLength; ++i)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]); 
 	}
 }
