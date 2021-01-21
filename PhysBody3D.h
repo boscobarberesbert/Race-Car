@@ -13,7 +13,11 @@ enum ElementType
 	SPAWN_SENSOR_RAMP,
 	SPAWN_SENSOR_RAIL,
 	DAMAGE,
-	FINISH
+	FINISH,
+	CHECKPOINT,
+	CHECKPOINT2,
+	CHECKPOINT3,
+	CHECKPOINT4
 };
 
 // =================================================

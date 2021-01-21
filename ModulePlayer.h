@@ -50,4 +50,5 @@ private:
 	float* initialTransf;
 
 	Timer jumpCooldown;
+	Timer lapTimer;
 };

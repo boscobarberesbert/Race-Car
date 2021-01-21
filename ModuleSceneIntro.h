@@ -49,4 +49,6 @@ public:
 	// Map traps
 	bool spawnedBalls1 = false;
 	bool spawnedBalls2 = false;
+
+	int checkpoint = 0;
 };

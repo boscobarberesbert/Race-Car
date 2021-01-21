@@ -105,6 +105,8 @@ bool ModulePlayer::Start()
 
 	initialTransf = new float[16];
 	vehicle->GetTransform(initialTransf);
+
+	lapTimer.Start();
 	
 	return true;
 }
@@ -196,7 +198,7 @@ update_status ModulePlayer::Update(float dt)
 		App->window->SetTitle(title);
 
 	char hud[80];
-	sprintf_s(hud, "HUD PLAYER");
+	sprintf_s(hud, "Time: %f", lapTimer.ReadSec());
 	DrawTextHUD(
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 1.3f, 
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f, 
@@ -219,7 +221,56 @@ void ModulePlayer::CameraFollow()
 
 void ModulePlayer::ResetPosition()
 {
-	vehicle->SetTransform(initialTransf);
+	if (App->scene_intro->checkpoint == 0)
+	{
+		vehicle->SetTransform(initialTransf);
+	}
+	else if (App->scene_intro->checkpoint == 1)
+	{
+		mat4x4 t;
+		for (int i = 0; i < 16; i++)
+		{
+			t.M[i] = initialTransf[i];
+		}
+		t.rotate(90, vec3{ 0,1,0 });
+		vehicle->SetTransform(t.M);
+		vehicle->SetPos(0, 7, 175);
+	}
+	else if (App->scene_intro->checkpoint == 2)
+	{
+		mat4x4 t;
+		for (int i = 0; i < 16; i++)
+		{
+			t.M[i] = initialTransf[i];
+		}
+		t.rotate(180, vec3{ 0,1,0 });
+		vehicle->SetTransform(t.M);
+		vehicle->SetPos(210, 3, 175);
+	}
+	else if (App->scene_intro->checkpoint == 3)
+	{
+		mat4x4 t;
+		for (int i = 0; i < 16; i++)
+		{
+			t.M[i] = initialTransf[i];
+		}
+		t.rotate(180, vec3{ 0,1,0 });
+		vehicle->SetTransform(t.M);
+		vehicle->SetPos(210, 22, 25);
+	}
+	else if (App->scene_intro->checkpoint == 4)
+	{
+		mat4x4 t;
+		for (int i = 0; i < 16; i++)
+		{
+			t.M[i] = initialTransf[i];
+		}
+		t.rotate(270, vec3{ 0,1,0 });
+		vehicle->SetTransform(t.M);
+		vehicle->SetPos(210, 17, -100);
+	}
+
+	vehicle->vehicle->getRigidBody()->clearForces();
 	vehicle->vehicle->getRigidBody()->setLinearVelocity({ 0.0f,0.0f,0.0f });
 	vehicle->vehicle->resetSuspension();
 }
