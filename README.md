@@ -12,6 +12,8 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 
 ## Key Features
 
+## Key Features
+
  - Scenario and ground, with platforms and traps.
  - The world has gravity.
  - Car moves with player input.
@@ -20,6 +22,13 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
  - Countdown using timer as the game condition (when completing a lap or running out of time)
  - A simple HUD with the timer and an indicator showing the current part of the level.
 
+## Goal of the Game
+
+The game is about completing a full lap of the circuit dodging the different obstacles, reaching the platforms and achieving the different checkpoints in order before the countdown reaches zero. The checkpoints allow the player to recover from the last fall and save some of the time. 
+
+- The red balls return the player to the last achieved checkpoint and the yellow ones just hit the player. 
+- When the time runs out, the entire game is restarted (returns to the start) and the player loses all the achieved checkpoints.
+ 
 ## Controls
 
 ### Player movement
