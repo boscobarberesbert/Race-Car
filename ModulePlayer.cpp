@@ -8,6 +8,9 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
+
+	secondsPassed = 0;
+	minutesPassed = 0;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -98,7 +101,6 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	
-	//vehicle->SetPos(210, 5, 10);
 	vehicle->SetPos(0.0f, 0.0f, 5.0f);
 
 	vehicle->collision_listeners.add(this);
@@ -184,6 +186,15 @@ update_status ModulePlayer::Update(float dt)
 		ResetPosition();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || minutesPassed == 4)
+	{
+		minutesPassed = 0;
+		secondsPassed = 0;
+		lapTimer.Start();
+		App->scene_intro->checkpoint = 0;
+		ResetPosition();
+	}
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -197,12 +208,20 @@ update_status ModulePlayer::Update(float dt)
 	if(!App->debug)
 		App->window->SetTitle(title);
 
+	secondsPassed = int(lapTimer.ReadSec());
+	if (secondsPassed == 59)
+	{
+		secondsPassed = 0;
+		minutesPassed++;
+		lapTimer.Start();
+	}
+
 	char hud[80];
-	sprintf_s(hud, "Time: %f", lapTimer.ReadSec());
+	sprintf_s(hud, "TIME REMAINING --- %d:%d", (3 - minutesPassed), (59 - secondsPassed));
 	DrawTextHUD(
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 1.3f, 
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f, 
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f, 
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(), 
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
 		hud
 	);
 
