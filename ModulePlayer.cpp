@@ -193,6 +193,14 @@ update_status ModulePlayer::Update(float dt)
 		lapTimer.Start();
 		App->scene_intro->checkpoint = 0;
 		ResetPosition();
+
+		App->scene_intro->spawnedBalls1 = false;
+		App->scene_intro->spawnedBalls2 = false;
+
+		App->scene_intro->primitives[16]->wire = false;
+		App->scene_intro->primitives[17]->wire = false;
+		App->scene_intro->primitives[18]->wire = false;
+		App->scene_intro->primitives[19]->wire = false;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
