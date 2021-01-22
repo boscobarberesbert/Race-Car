@@ -58,31 +58,31 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		Sphere* sphere = new Sphere(2);
 		sphere->SetPos(230, 25, 90);
 		primitives.PushBack(sphere);
-		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE, App->player);
 		sphere->color = { 1,0,0,1 };
 
 		Sphere* sphere2 = new Sphere(2);
 		sphere2->SetPos(220, 25, 90);
 		primitives.PushBack(sphere2);
-		App->physics->AddBody(*sphere2, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere2, 10.0f, ElementType::DAMAGE, App->player);
 		sphere2->color = { 1,0,0,1 };
 
 		Sphere* sphere3 = new Sphere(2);
 		sphere3->SetPos(210, 25, 90);
 		primitives.PushBack(sphere3);
-		App->physics->AddBody(*sphere3, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere3, 10.0f, ElementType::DAMAGE, App->player);
 		sphere3->color = { 1,0,0,1 };
 
 		Sphere* sphere4 = new Sphere(2);
 		sphere4->SetPos(200, 25, 90);
 		primitives.PushBack(sphere4);
-		App->physics->AddBody(*sphere4, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere4, 10.0f, ElementType::DAMAGE, App->player);
 		sphere4->color = { 1,0,0,1 };
 
 		Sphere* sphere5 = new Sphere(2);
 		sphere5->SetPos(190, 25, 90);
 		primitives.PushBack(sphere5);
-		App->physics->AddBody(*sphere5, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere5, 10.0f, ElementType::DAMAGE, App->player);
 		sphere5->color = { 1,0,0,1 };
 
 		spawnedBalls1 = true;
@@ -483,7 +483,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Sphere* sphere7 = new Sphere(10);
 	sphere7->SetPos(110, 15, -100);
 	primitives.PushBack(sphere7);
-	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE, this, true);
+	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE, App->player, true);
 	sphere7->color = { 1,0,0,1 };
 
 	// 31
