@@ -4,8 +4,8 @@
 
 Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet for the physics, and OpenGL and SDL as the render tools.
 <img src="https://user-images.githubusercontent.com/59050279/105526191-5a2a0680-5ce2-11eb-9c55-cc886603bef4.jpg">
-<img src="https://user-images.githubusercontent.com/59050279/105526199-5c8c6080-5ce2-11eb-8817-930e0d79831f.jpg" width="510"> <img src="https://user-images.githubusercontent.com/59050279/105526211-5f875100-5ce2-11eb-96bc-59429891a7d3.jpg" width="510">
-<img src="https://user-images.githubusercontent.com/59050279/105526224-62824180-5ce2-11eb-8776-d5609cb699c2.jpg" width="510"> <img src="https://user-images.githubusercontent.com/59050279/105526231-64e49b80-5ce2-11eb-8f5c-fa9720520a1b.jpg" width="510">
+<img src="https://user-images.githubusercontent.com/59050279/105526199-5c8c6080-5ce2-11eb-8817-930e0d79831f.jpg" width="500"> <img src="https://user-images.githubusercontent.com/59050279/105526211-5f875100-5ce2-11eb-96bc-59429891a7d3.jpg" width="500">
+<img src="https://user-images.githubusercontent.com/59050279/105526224-62824180-5ce2-11eb-8776-d5609cb699c2.jpg" width="500"> <img src="https://user-images.githubusercontent.com/59050279/105526231-64e49b80-5ce2-11eb-8f5c-fa9720520a1b.jpg" width="500">
 
 ## Key Features
 
