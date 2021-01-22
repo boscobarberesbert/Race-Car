@@ -2,7 +2,7 @@
 
 ## Description
 
-Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet and as render tools: OpenGL and SDL.
+Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet and OenGL and SDL as the render tools.
 
 ## Key Features
 
@@ -11,6 +11,7 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
  - Car moves with player input.
  - Camera follows the movement of the car.
  - Constraints for some elements in the level.
+ - Timer as the victory or lose condition.
 
 ## Controls
 
@@ -33,7 +34,8 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 |---|------|
 |F1|Physics Debug View|
 |F2|Framerate Debug Window Title|
-|F3|Reset Level|
+|F3|Reset Checkpoint|
+|F4|Reset Level|
 
 ## Developers
 
