@@ -140,7 +140,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* ground = new Cube(700, 1, 700);
 	ground->SetPos(0, 0, 0);
 	primitives.PushBack(ground);
-	App->physics->AddBody(*ground, 0.0f, ElementType::DAMAGE);
+	App->physics->AddBody(*ground, 0.0f, ElementType::DAMAGE, this, true);
 	ground->color = { 1,0,0,1 };
 
 	// Ceiling (sky)
