@@ -15,6 +15,17 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 500.0f
 
+enum HUDStatus
+{
+	START,
+	C1,
+	C2,
+	C3,
+	C4,
+	VICTORY,
+	GAME_OVER
+};
+
 class ModulePlayer : public Module
 {
 public:
@@ -24,8 +35,11 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
 	void CameraFollow();
+
 	void ResetPosition();
+	void ResetLevel();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
@@ -46,6 +60,8 @@ public:
 	Timer lapTimer;
 	int secondsPassed = 0;
 	int minutesPassed = 0;
+
+	HUDStatus currentHUD = HUDStatus::START;
 
 private:
 

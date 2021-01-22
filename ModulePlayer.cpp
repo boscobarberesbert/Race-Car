@@ -11,6 +11,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	secondsPassed = 0;
 	minutesPassed = 0;
+
+	currentHUD = HUDStatus::START;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -186,21 +188,16 @@ update_status ModulePlayer::Update(float dt)
 		ResetPosition();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || minutesPassed == 4)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
-		minutesPassed = 0;
-		secondsPassed = 0;
-		lapTimer.Start();
-		App->scene_intro->checkpoint = 0;
-		ResetPosition();
+		currentHUD = HUDStatus::START;
+		ResetLevel();
+	}
 
-		App->scene_intro->spawnedBalls1 = false;
-		App->scene_intro->spawnedBalls2 = false;
-
-		App->scene_intro->primitives[16]->wire = false;
-		App->scene_intro->primitives[17]->wire = false;
-		App->scene_intro->primitives[18]->wire = false;
-		App->scene_intro->primitives[19]->wire = false;
+	if (minutesPassed == 4)
+	{
+		currentHUD = HUDStatus::GAME_OVER;
+		ResetLevel();
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -225,10 +222,56 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	char hud[80];
-	sprintf_s(hud, "TIME REMAINING --- %d:%d", (3 - minutesPassed), (59 - secondsPassed));
+
+	if (secondsPassed > 49)
+	{
+		sprintf_s(hud, "TIME REMAINING --- 0%d:0%d", (3 - minutesPassed), (59 - secondsPassed));
+	}
+	else
+	{
+		sprintf_s(hud, "TIME REMAINING --- 0%d:%d", (3 - minutesPassed), (59 - secondsPassed));
+	}
+
 	DrawTextHUD(
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f, 
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f, 
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+		hud
+	);
+
+	switch (currentHUD)
+	{
+	case(HUDStatus::START):
+		sprintf_s(hud, "START");
+		break;
+	case(HUDStatus::C1):
+		sprintf_s(hud, "Checkpoint 1");
+		break;
+	case(HUDStatus::C2):
+		sprintf_s(hud, "Checkpoint 2");
+		break;
+	case(HUDStatus::C3):
+		sprintf_s(hud, "Checkpoint 3");
+		break;
+	case(HUDStatus::C4):
+		sprintf_s(hud, "Checkpoint 4");
+		break;
+	case(HUDStatus::VICTORY):
+		sprintf_s(hud, "YOU WIN!");
+		break;
+	case(HUDStatus::GAME_OVER):
+		sprintf_s(hud, "YOU LOSE");
+		break;
+	}
+
+	if ((currentHUD == HUDStatus::VICTORY || currentHUD == HUDStatus::GAME_OVER) && secondsPassed > 5)
+	{
+		currentHUD = HUDStatus::START;
+	}
+
+	DrawTextHUD(
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
 		hud
 	);
@@ -318,6 +361,25 @@ void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text)
 
 	for (int i = 0; i < textLength; ++i)
 	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]); 
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 	}
+}
+
+void ModulePlayer::ResetLevel()
+{
+	minutesPassed = 0;
+	secondsPassed = 0;
+	lapTimer.Start();
+
+	App->scene_intro->checkpoint = 0;
+
+	ResetPosition();
+
+	App->scene_intro->spawnedBalls1 = false;
+	App->scene_intro->spawnedBalls2 = false;
+
+	App->scene_intro->primitives[16]->wire = false;
+	App->scene_intro->primitives[17]->wire = false;
+	App->scene_intro->primitives[18]->wire = false;
+	App->scene_intro->primitives[19]->wire = false;
 }

@@ -99,11 +99,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	else if (body1->type == ElementType::FINISH && body1->isSensor && checkpoint == 4)
 	{
-
 		App->player->minutesPassed = 0;
 		App->player->secondsPassed = 0;
 		App->player->lapTimer.Start();
 		checkpoint = 0;
+
+		App->player->currentHUD = HUDStatus::VICTORY;
 
 		spawnedBalls1 = false;
 		spawnedBalls2 = false;
@@ -116,18 +117,22 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	else if (body1->type == ElementType::CHECKPOINT && body1->isSensor && checkpoint == 0)
 	{
 		checkpoint = 1;
+		App->player->currentHUD = HUDStatus::C1;
 	}
 	else if (body1->type == ElementType::CHECKPOINT2 && body1->isSensor && checkpoint == 1)
 	{
 		checkpoint = 2;
+		App->player->currentHUD = HUDStatus::C2;
 	}
 	else if (body1->type == ElementType::CHECKPOINT3 && body1->isSensor && checkpoint == 2)
 	{
 		checkpoint = 3;
+		App->player->currentHUD = HUDStatus::C3;
 	}
 	else if (body1->type == ElementType::CHECKPOINT4 && body1->isSensor && checkpoint == 3)
 	{
 		checkpoint = 4;
+		App->player->currentHUD = HUDStatus::C4;
 	}
 }
 
