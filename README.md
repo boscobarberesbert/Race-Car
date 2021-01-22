@@ -17,7 +17,8 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
  - Car moves with player input.
  - Camera follows the movement of the car.
  - Constraints for some elements in the level.
- - Timer as the victory or lose condition.
+ - Countdown using timer as the game condition (when completing a lap or running out of time)
+ - A simple HUD with the timer and an indicator for the part of the level.
 
 ## Controls
 
