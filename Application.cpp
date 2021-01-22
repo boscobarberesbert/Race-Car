@@ -30,7 +30,6 @@ Application::Application()
 	AddModule(renderer3D);
 
 	debug = false;
-	fullscreen = false;
 }
 
 Application::~Application()
