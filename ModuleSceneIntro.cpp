@@ -55,11 +55,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	else if (body1->type == ElementType::SPAWN_SENSOR_RAMP && body1->isSensor && spawnedBalls1 == false)
 	{
-		Sphere* sphere = new Sphere(2);
-		sphere->SetPos(230, 25, 90);
-		primitives.PushBack(sphere);
-		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE);
-		sphere->color = { 1,0,0,1 };
+		Sphere* sphere1 = new Sphere(2);
+		sphere1->SetPos(230, 25, 90);
+		primitives.PushBack(sphere1);
+		App->physics->AddBody(*sphere1, 10.0f, ElementType::DAMAGE);
+		sphere1->color = { 1,0,0,1 };
 
 		Sphere* sphere2 = new Sphere(2);
 		sphere2->SetPos(220, 25, 90);
@@ -191,17 +191,17 @@ void ModuleSceneIntro::CreateCircuit()
 	// Initial tunel
 	// Left part
 	// 6
-	Cube* tunel = new Cube(1, 10, 100);
-	tunel->SetPos(5, 5, 10.5);
-	primitives.PushBack(tunel);
-	App->physics->AddBody(*tunel, 0.0f);
+	Cube* leftTunel = new Cube(1, 10, 100);
+	leftTunel->SetPos(5, 5, 10.5);
+	primitives.PushBack(leftTunel);
+	App->physics->AddBody(*leftTunel, 0.0f);
 
 	// Right part
 	// 7
-	Cube* tunel2 = new Cube(1, 10, 100);
-	tunel2->SetPos(-5, 5, 10.5);
-	primitives.PushBack(tunel2);
-	App->physics->AddBody(*tunel2, 0.0f);
+	Cube* rightTunel = new Cube(1, 10, 100);
+	rightTunel->SetPos(-5, 5, 10.5);
+	primitives.PushBack(rightTunel);
+	App->physics->AddBody(*rightTunel, 0.0f);
 
 	// Ramp up
 	// 8
@@ -254,23 +254,23 @@ void ModuleSceneIntro::CreateCircuit()
 
 	// Platforms to jump on
 	// 14
-	Cube* platform = new Cube(30, 1, 15);
-	platform->SetPos(97.5, 10, 175);
-	primitives.PushBack(platform);
-	App->physics->AddBody(*platform, 0.0f);
+	Cube* platformJump1 = new Cube(30, 1, 15);
+	platformJump1->SetPos(97.5, 10, 175);
+	primitives.PushBack(platformJump1);
+	App->physics->AddBody(*platformJump1, 0.0f);
 
 	// 15
-	Cube* platform2 = new Cube(45, 1, 15);
-	platform2->SetPos(157.5, 12.5, 175);
-	primitives.PushBack(platform2);
-	App->physics->AddBody(*platform2, 0.0f);
+	Cube* platformJump2 = new Cube(45, 1, 15);
+	platformJump2->SetPos(157.5, 12.5, 175);
+	primitives.PushBack(platformJump2);
+	App->physics->AddBody(*platformJump2, 0.0f);
 
 	// Tube
 	// 16
-	Cube* tube = new Cube(15, 10, 1);
-	tube->SetPos(210, 13.25, 167.5);
-	primitives.PushBack(tube);
-	App->physics->AddBody(*tube, 0.0f);
+	Cube* tube1 = new Cube(15, 10, 1);
+	tube1->SetPos(210, 13.25, 167.5);
+	primitives.PushBack(tube1);
+	App->physics->AddBody(*tube1, 0.0f);
 
 	// 17
 	Cube* tube2 = new Cube(15, 15, 1);
@@ -290,7 +290,7 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(tube4);
 	App->physics->AddBody(*tube4, 0.0f);
 
-	// Under tube platform
+	// Under tube platform (Checkpoint)
 	// 20
 	Cube* tubePlatform = new Cube(15, 1, 15);
 	tubePlatform->SetPos(210, 1, 175);
@@ -305,55 +305,55 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(tubeSensor);
 	App->physics->AddBody(*tubeSensor, 0.0f, ElementType::TUBE_SENSOR, this, true);
 
-	// Bounds
+	// Tube Bounds
 	// 22
-	Cube* platform11 = new Cube(15, 2, 1);
-	platform11->SetPos(210, 1, 182.5);
-	primitives.PushBack(platform11);
-	App->physics->AddBody(*platform11, 0.0f);
+	Cube* tubeFence1 = new Cube(15, 2, 1);
+	tubeFence1->SetPos(210, 1, 182.5);
+	primitives.PushBack(tubeFence1);
+	App->physics->AddBody(*tubeFence1, 0.0f);
 
 	// 23
-	Cube* platform12 = new Cube(1, 2, 15);
-	platform12->SetPos(202.5, 1, 175);
-	primitives.PushBack(platform12);
-	App->physics->AddBody(*platform12, 0.0f);
+	Cube* tubeFence2 = new Cube(1, 2, 15);
+	tubeFence2->SetPos(202.5, 1, 175);
+	primitives.PushBack(tubeFence2);
+	App->physics->AddBody(*tubeFence2, 0.0f);
 
 	// 24
-	Cube* platform13 = new Cube(1, 2, 15);
-	platform13->SetPos(217.5, 1, 175);
-	primitives.PushBack(platform13);
-	App->physics->AddBody(*platform13, 0.0f);
+	Cube* tubeFence3 = new Cube(1, 2, 15);
+	tubeFence3->SetPos(217.5, 1, 175);
+	primitives.PushBack(tubeFence3);
+	App->physics->AddBody(*tubeFence3, 0.0f);
 
 	// 25
-	Cube* platform14 = new Cube(15, 1, 15);
-	platform14->SetPos(210, 3, 161);
-	platform14->SetRotation(15, { 1,0,0 });
-	primitives.PushBack(platform14);
-	App->physics->AddBody(*platform14, 0.0f);
-	platform14->color = { 0.25,0.25,0.25,1 };
+	Cube* tubeRamp = new Cube(15, 1, 15);
+	tubeRamp->SetPos(210, 3, 161);
+	tubeRamp->SetRotation(15, { 1,0,0 });
+	primitives.PushBack(tubeRamp);
+	App->physics->AddBody(*tubeRamp, 0.0f);
+	tubeRamp->color = { 0.25,0.25,0.25,1 };
 
 	// 26
-	Cube* platform15 = new Cube(60, 1, 60);
-	platform15->SetPos(210, 10, 115);
-	platform15->SetRotation(15, { 1,0,0 });
-	primitives.PushBack(platform15);
-	App->physics->AddBody(*platform15, 0.0f);
-	platform15->color = { 0.25,0.25,0.25,1 };
+	Cube* hugeRamp = new Cube(60, 1, 60);
+	hugeRamp->SetPos(210, 10, 115);
+	hugeRamp->SetRotation(15, { 1,0,0 });
+	primitives.PushBack(hugeRamp);
+	App->physics->AddBody(*hugeRamp, 0.0f);
+	hugeRamp->color = { 0.25,0.25,0.25,1 };
 
 	// Balls sensor (at jump)
 	// 27
-	Cube* platform16 = new Cube(15, 5, 1);
-	platform16->SetPos(210, 10, 155);
-	platform16->wire = true;
-	primitives.PushBack(platform16);
-	App->physics->AddBody(*platform16, 0.0f, ElementType::SPAWN_SENSOR_RAMP, this, true);
+	Cube* ballsSensor = new Cube(15, 5, 1);
+	ballsSensor->SetPos(210, 10, 155);
+	ballsSensor->wire = true;
+	primitives.PushBack(ballsSensor);
+	App->physics->AddBody(*ballsSensor, 0.0f, ElementType::SPAWN_SENSOR_RAMP, this, true);
 
 	// Balls for constraints links
 	// 28
-	Sphere* sphere = new Sphere(1);
-	sphere->SetPos(0, 50, 90);
-	primitives.PushBack(sphere);
-	App->physics->AddBody(*sphere, 0.0f);
+	Sphere* sphere1 = new Sphere(1);
+	sphere1->SetPos(0, 50, 90);
+	primitives.PushBack(sphere1);
+	App->physics->AddBody(*sphere1, 0.0f);
 
 	// 29
 	Sphere* sphere2 = new Sphere(5);
@@ -363,18 +363,18 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere2->body->Push(1500.0f, 0.0f, 0.0f);
 	sphere2->color = { 1,1,0,1 };
 
-	// Platforms to jump
+	// Platforms to jump (Checkpoint)
 	// 30
-	Cube* platform3 = new Cube(15, 1, 15);
-	platform3->SetPos(210, 20, 25);
-	primitives.PushBack(platform3);
-	App->physics->AddBody(*platform3, 0.0f);
+	Cube* landingPlatform1 = new Cube(15, 1, 15);
+	landingPlatform1->SetPos(210, 20, 25);
+	primitives.PushBack(landingPlatform1);
+	App->physics->AddBody(*landingPlatform1, 0.0f);
 
-	// 31
-	Cube* platform4 = new Cube(15, 1, 25);
-	platform4->SetPos(210, 5, 10);
-	primitives.PushBack(platform4);
-	App->physics->AddBody(*platform4, 0.0f);
+	// 31 (Sensor Trap Ball)
+	Cube* landingPlatform2 = new Cube(15, 1, 25);
+	landingPlatform2->SetPos(210, 5, 10);
+	primitives.PushBack(landingPlatform2);
+	App->physics->AddBody(*landingPlatform2, 0.0f);
 
 	// Sensor to spawn trap ball
 	// 32
@@ -386,10 +386,10 @@ void ModuleSceneIntro::CreateCircuit()
 
 	// Rails
 	// 33
-	Cube* rail = new Cube(1, 1, 15);
-	rail->SetPos(208.5, 5, -10);
-	primitives.PushBack(rail);
-	App->physics->AddBody(*rail, 0.0f);
+	Cube* rail1 = new Cube(1, 1, 15);
+	rail1->SetPos(208.5, 5, -10);
+	primitives.PushBack(rail1);
+	App->physics->AddBody(*rail1, 0.0f);
 
 	// 34
 	Cube* rail2 = new Cube(1, 1, 15);
@@ -397,14 +397,14 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(rail2);
 	App->physics->AddBody(*rail2, 0.0f);
 
-	// 35
+	// 35 (Ramp)
 	Cube* rail3 = new Cube(1, 1, 45);
 	rail3->SetPos(208.5, 14.5, -37.5);
 	rail3->SetRotation(25, { 1,0,0 });
 	primitives.PushBack(rail3);
 	App->physics->AddBody(*rail3, 0.0f);
 
-	// 36
+	// 36 (Ramp)
 	Cube* rail4 = new Cube(1, 1, 45);
 	rail4->SetPos(211.5, 14.5, -37.5);
 	rail4->SetRotation(25, { 1,0,0 });
@@ -413,17 +413,17 @@ void ModuleSceneIntro::CreateCircuit()
 
 	// Mini platform after rails
 	// 37
-	Cube* platform5 = new Cube(7, 1, 13);
-	platform5->SetPos(210, 24, -64);
-	primitives.PushBack(platform5);
-	App->physics->AddBody(*platform5, 0.0f);
+	Cube* landingPlatform3 = new Cube(7, 1, 13);
+	landingPlatform3->SetPos(210, 24, -64);
+	primitives.PushBack(landingPlatform3);
+	App->physics->AddBody(*landingPlatform3, 0.0f);
 
-	// Platform to jump on
+	// Platform to jump on (Checkpoint)
 	// 38
-	Cube* platform6 = new Cube(15, 1, 15);
-	platform6->SetPos(210, 15, -100);
-	primitives.PushBack(platform6);
-	App->physics->AddBody(*platform6, 0.0f);
+	Cube* landingPlatform4 = new Cube(15, 1, 15);
+	landingPlatform4->SetPos(210, 15, -100);
+	primitives.PushBack(landingPlatform4);
+	App->physics->AddBody(*landingPlatform4, 0.0f);
 
 	// Balls for constraints links
 	// 39
@@ -456,31 +456,34 @@ void ModuleSceneIntro::CreateCircuit()
 	initSensor->wire = true;
 
 	// Death catwalk
-	Cube* catwalk = new Cube(50, 1, 15);
-	catwalk->SetPos(150, 11, -100);
-	primitives.PushBack(catwalk);
-	App->physics->AddBody(*catwalk, 0.0f);
+	// 43
+	Cube* catwalk1 = new Cube(50, 1, 15);
+	catwalk1->SetPos(150, 11, -100);
+	primitives.PushBack(catwalk1);
+	App->physics->AddBody(*catwalk1, 0.0f);
 
-	// Square
-	Cube* square = new Cube(30, 1, 30);
-	square->SetPos(110, 11, -100);
-	primitives.PushBack(square);
-	App->physics->AddBody(*square, 0.0f);
+	// Death catwalk Square
+	// 44
+	Cube* deathCatwalkSquare = new Cube(27, 1, 27);
+	deathCatwalkSquare->SetPos(110, 11, -100);
+	primitives.PushBack(deathCatwalkSquare);
+	App->physics->AddBody(*deathCatwalkSquare, 0.0f);
 
-	// Death catwalk 2
+	// Death catwalk
+	// 45
 	Cube* catwalk2 = new Cube(50, 1, 15);
 	catwalk2->SetPos(70, 11, -100);
 	primitives.PushBack(catwalk2);
 	App->physics->AddBody(*catwalk2, 0.0f);
 
 	// Balls for constraints links
-	// 28
+	// 46
 	Sphere* sphere5 = new Sphere(1);
 	sphere5->SetPos(150, 47, -100);
 	primitives.PushBack(sphere5);
 	App->physics->AddBody(*sphere5, 0.0f);
 
-	// 29
+	// 47
 	Sphere* sphere6 = new Sphere(5);
 	sphere6->SetPos(150, 17, -100);
 	primitives.PushBack(sphere6);
@@ -488,20 +491,20 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere6->body->Push(25000000.0f, 0.0f, 0.0f);
 	sphere6->color = { 1,1,0,1 };
 
-	// 30
+	// 48
 	Sphere* sphere7 = new Sphere(10);
-	sphere7->SetPos(110, 15, -100);
+	sphere7->SetPos(110, 11, -100);
 	primitives.PushBack(sphere7);
 	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE);
 	sphere7->color = { 1,0,0,1 };
 
-	// 31
+	// 49
 	Sphere* sphere8 = new Sphere(1);
 	sphere8->SetPos(90, 20, -100);
 	primitives.PushBack(sphere8);
 	App->physics->AddBody(*sphere8, 0.0f);
 
-	// 32
+	// 50
 	Sphere* sphere9 = new Sphere(1.5);
 	sphere9->SetPos(90, 15, -100);
 	primitives.PushBack(sphere9);
@@ -509,13 +512,13 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere9->body->Push(0.0f, 0.0f, 100000.0f);
 	sphere9->color = { 1,0,0,1 };
 
-	// 33
+	// 51
 	Sphere* sphere10 = new Sphere(1);
 	sphere10->SetPos(70, 20, -100);
 	primitives.PushBack(sphere10);
 	App->physics->AddBody(*sphere10, 0.0f);
 
-	// 34
+	// 52
 	Sphere* sphere11 = new Sphere(1.5);
 	sphere11->SetPos(70, 15, -100);
 	primitives.PushBack(sphere11);
@@ -523,13 +526,13 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere11->body->Push(0.0f, 0.0f, -100000.0f);
 	sphere11->color = { 1,0,0,1 };
 
-	// 35
+	// 53
 	Sphere* sphere12 = new Sphere(1);
 	sphere12->SetPos(50, 20, -100);
 	primitives.PushBack(sphere12);
 	App->physics->AddBody(*sphere12, 0.0f);
 
-	// 36
+	// 54
 	Sphere* sphere13 = new Sphere(1.5);
 	sphere13->SetPos(50, 15, -100);
 	primitives.PushBack(sphere13);
@@ -537,47 +540,47 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere13->body->Push(0.0f, 0.0f, 100000.0f);
 	sphere13->color = { 1,0,0,1 };
 
-	// 37
-	Cube* finalPlatform2 = new Cube(10, 10, 1);
-	finalPlatform2->SetPos(0, 1, -105);
+	// 55
+	Cube* finalPlatform1 = new Cube(10, 10, 1);
+	finalPlatform1->SetPos(0, 1, -105);
+	primitives.PushBack(finalPlatform1);
+	App->physics->AddBody(*finalPlatform1, 0.0f);
+
+	// 56
+	Cube* finalPlatform2 = new Cube(1, 10, 10);
+	finalPlatform2->SetPos(5, 1, -100);
 	primitives.PushBack(finalPlatform2);
 	App->physics->AddBody(*finalPlatform2, 0.0f);
 
-	// 38
+	// 57
 	Cube* finalPlatform3 = new Cube(1, 10, 10);
-	finalPlatform3->SetPos(5, 1, -100);
+	finalPlatform3->SetPos(-5, 1, -100);
 	primitives.PushBack(finalPlatform3);
 	App->physics->AddBody(*finalPlatform3, 0.0f);
 
-	// 39
-	Cube* finalPlatform4 = new Cube(1, 10, 10);
-	finalPlatform4->SetPos(-5, 1, -100);
-	primitives.PushBack(finalPlatform4);
-	App->physics->AddBody(*finalPlatform4, 0.0f);
-
 	// Checkpoints
-	// 40
+	// 58
 	Cube* checkpoint = new Cube(1, 1, 1);
 	checkpoint->SetPos(0, 7, 175);
 	primitives.PushBack(checkpoint);
 	App->physics->AddBody(*checkpoint, 0.0f, ElementType::CHECKPOINT, this, true);
 	checkpoint->wire = true;
 
-	// 41
+	// 59
 	Cube* checkpoint2 = new Cube(1, 1, 1);
 	checkpoint2->SetPos(210, 3, 175);
 	primitives.PushBack(checkpoint2);
 	App->physics->AddBody(*checkpoint2, 0.0f, ElementType::CHECKPOINT2, this, true);
 	checkpoint2->wire = true;
 
-	// 42
+	// 60
 	Cube* checkpoint3 = new Cube(1, 1, 1);
 	checkpoint3->SetPos(210, 22, 25);
 	primitives.PushBack(checkpoint3);
 	App->physics->AddBody(*checkpoint3, 0.0f, ElementType::CHECKPOINT3, this, true);
 	checkpoint3->wire = true;
 
-	// 43
+	// 61
 	Cube* checkpoint4 = new Cube(1, 1, 1);
 	checkpoint4->SetPos(210, 17, -100);
 	primitives.PushBack(checkpoint4);
@@ -585,7 +588,7 @@ void ModuleSceneIntro::CreateCircuit()
 	checkpoint4->wire = true;
 
 	// Adding constraints
-	App->physics->AddConstraintP2P(*sphere->body, *sphere2->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere->transform.translation().x - sphere2->transform.translation().x, sphere->transform.translation().y - sphere2->transform.translation().y, sphere->transform.translation().z - sphere2->transform.translation().z });
+	App->physics->AddConstraintP2P(*sphere1->body, *sphere2->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere1->transform.translation().x - sphere2->transform.translation().x, sphere1->transform.translation().y - sphere2->transform.translation().y, sphere1->transform.translation().z - sphere2->transform.translation().z });
 	App->physics->AddConstraintP2P(*sphere3->body, *sphere4->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere3->transform.translation().x - sphere4->transform.translation().x, sphere3->transform.translation().y - sphere4->transform.translation().y, sphere3->transform.translation().z - sphere4->transform.translation().z });
 	App->physics->AddConstraintP2P(*sphere5->body, *sphere6->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere5->transform.translation().x - sphere6->transform.translation().x, sphere5->transform.translation().y - sphere6->transform.translation().y, sphere5->transform.translation().z - sphere6->transform.translation().z });
 	App->physics->AddConstraintP2P(*sphere8->body, *sphere9->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere8->transform.translation().x - sphere9->transform.translation().x, sphere8->transform.translation().y - sphere9->transform.translation().y, sphere8->transform.translation().z - sphere9->transform.translation().z });

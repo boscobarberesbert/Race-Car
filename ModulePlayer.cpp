@@ -103,7 +103,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	
-	vehicle->SetPos(0.0f, 0.0f, 5.0f);
+	vehicle->SetPos(0.0f, 3.0f, 5.0f);
 
 	vehicle->collision_listeners.add(this);
 
@@ -264,7 +264,7 @@ update_status ModulePlayer::Update(float dt)
 		break;
 	}
 
-	if ((currentHUD == HUDStatus::VICTORY || currentHUD == HUDStatus::GAME_OVER) && secondsPassed > 5)
+	if ((currentHUD == HUDStatus::VICTORY || currentHUD == HUDStatus::GAME_OVER) && secondsPassed > 4)
 	{
 		currentHUD = HUDStatus::START;
 	}
