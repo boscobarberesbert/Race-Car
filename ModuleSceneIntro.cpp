@@ -58,31 +58,31 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		Sphere* sphere = new Sphere(2);
 		sphere->SetPos(230, 25, 90);
 		primitives.PushBack(sphere);
-		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE, App->player);
+		App->physics->AddBody(*sphere, 10.0f, ElementType::DAMAGE);
 		sphere->color = { 1,0,0,1 };
 
 		Sphere* sphere2 = new Sphere(2);
 		sphere2->SetPos(220, 25, 90);
 		primitives.PushBack(sphere2);
-		App->physics->AddBody(*sphere2, 10.0f, ElementType::DAMAGE, App->player);
+		App->physics->AddBody(*sphere2, 10.0f, ElementType::DAMAGE);
 		sphere2->color = { 1,0,0,1 };
 
 		Sphere* sphere3 = new Sphere(2);
 		sphere3->SetPos(210, 25, 90);
 		primitives.PushBack(sphere3);
-		App->physics->AddBody(*sphere3, 10.0f, ElementType::DAMAGE, App->player);
+		App->physics->AddBody(*sphere3, 10.0f, ElementType::DAMAGE);
 		sphere3->color = { 1,0,0,1 };
 
 		Sphere* sphere4 = new Sphere(2);
 		sphere4->SetPos(200, 25, 90);
 		primitives.PushBack(sphere4);
-		App->physics->AddBody(*sphere4, 10.0f, ElementType::DAMAGE, App->player);
+		App->physics->AddBody(*sphere4, 10.0f, ElementType::DAMAGE);
 		sphere4->color = { 1,0,0,1 };
 
 		Sphere* sphere5 = new Sphere(2);
 		sphere5->SetPos(190, 25, 90);
 		primitives.PushBack(sphere5);
-		App->physics->AddBody(*sphere5, 10.0f, ElementType::DAMAGE, App->player);
+		App->physics->AddBody(*sphere5, 10.0f, ElementType::DAMAGE);
 		sphere5->color = { 1,0,0,1 };
 
 		spawnedBalls1 = true;
@@ -92,13 +92,17 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		Sphere* sphere6 = new Sphere(2);
 		sphere6->SetPos(210, 24, -55);
 		primitives.PushBack(sphere6);
-		App->physics->AddBody(*sphere6, 10.0f, ElementType::DAMAGE, App->player, true);
+		App->physics->AddBody(*sphere6, 10.0f, ElementType::DAMAGE);
 		sphere6->color = { 1,0,0,1 };
 
 		spawnedBalls2 = true;
 	}
-	else if (body1->type == ElementType::FINISH && body1->isSensor)
+	else if (body1->type == ElementType::FINISH && body1->isSensor && checkpoint == 4)
 	{
+
+		App->player->minutesPassed = 0;
+		App->player->secondsPassed = 0;
+		App->player->lapTimer.Start();
 		checkpoint = 0;
 
 		spawnedBalls1 = false;
@@ -136,7 +140,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* ground = new Cube(700, 1, 700);
 	ground->SetPos(0, 0, 0);
 	primitives.PushBack(ground);
-	App->physics->AddBody(*ground, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*ground, 0.0f, ElementType::DAMAGE);
 	ground->color = { 1,0,0,1 };
 
 	// Ceiling (sky)
@@ -144,7 +148,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* ceiling = new Cube(500, 1, 500);
 	ceiling->SetPos(100, 80, 0);
 	primitives.PushBack(ceiling);
-	App->physics->AddBody(*ceiling, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*ceiling, 0.0f, ElementType::DAMAGE);
 	ceiling->color = { 0.4,0.9,1,1 };
 
 	// Front wall (sky)
@@ -152,7 +156,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* frontWall = new Cube(500, 100, 1);
 	frontWall->SetPos(100, 50, 200);
 	primitives.PushBack(frontWall);
-	App->physics->AddBody(*frontWall, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*frontWall, 0.0f, ElementType::DAMAGE);
 	frontWall->color = { 0.4,0.9,1,1 };
 
 	// Back wall (sky)
@@ -160,7 +164,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* backWall = new Cube(1, 100, 500);
 	backWall->SetPos(-50, 50, 0);
 	primitives.PushBack(backWall);
-	App->physics->AddBody(*backWall, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*backWall, 0.0f, ElementType::DAMAGE);
 	backWall->color = { 0.4,0.9,1,1 };
 
 	// Left wall (sky)
@@ -168,7 +172,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* leftWall = new Cube(1, 100, 500);
 	leftWall->SetPos(300, 50, 0);
 	primitives.PushBack(leftWall);
-	App->physics->AddBody(*leftWall, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*leftWall, 0.0f, ElementType::DAMAGE);
 	leftWall->color = { 0.4,0.9,1,1 };
 
 	// Right wall (sky)
@@ -176,7 +180,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* rightWall = new Cube(500, 100, 1);
 	rightWall->SetPos(100, 50, -150);
 	primitives.PushBack(rightWall);
-	App->physics->AddBody(*rightWall, 0.0f, ElementType::DAMAGE, App->player);
+	App->physics->AddBody(*rightWall, 0.0f, ElementType::DAMAGE);
 	rightWall->color = { 0.4,0.9,1,1 };
 
 	// Initial tunel
@@ -200,8 +204,8 @@ void ModuleSceneIntro::CreateCircuit()
 	rampUp->SetPos(0, 1, 30);
 	rampUp->SetRotation(75, { 1,0,0 });
 	primitives.PushBack(rampUp);
-	rampUp->color = { 0.25,0.25,0.25,1 };
 	App->physics->AddBody(*rampUp, 0.0f);
+	rampUp->color = { 0.25,0.25,0.25,1 };
 
 	// Ramp down
 	// 9
@@ -209,8 +213,8 @@ void ModuleSceneIntro::CreateCircuit()
 	rampDown->SetPos(0, 10, 130);
 	rampDown->SetRotation(285, { 1,0,0 });
 	primitives.PushBack(rampDown);
-	rampDown->color = { 0.25,0.25,0.25 };
 	App->physics->AddBody(*rampDown, 0.0f);
+	rampDown->color = { 0.25,0.25,0.25 };
 
 	// Ramp jump
 	// 10
@@ -320,16 +324,16 @@ void ModuleSceneIntro::CreateCircuit()
 	platform14->SetPos(210, 3, 161);
 	platform14->SetRotation(15, { 1,0,0 });
 	primitives.PushBack(platform14);
-	platform14->color = { 0.25,0.25,0.25,1 };
 	App->physics->AddBody(*platform14, 0.0f);
+	platform14->color = { 0.25,0.25,0.25,1 };
 
 	// 26
 	Cube* platform15 = new Cube(60, 1, 60);
 	platform15->SetPos(210, 10, 115);
 	platform15->SetRotation(15, { 1,0,0 });
 	primitives.PushBack(platform15);
-	platform15->color = { 0.25,0.25,0.25,1 };
 	App->physics->AddBody(*platform15, 0.0f);
+	platform15->color = { 0.25,0.25,0.25,1 };
 
 	// Balls sensor (at jump)
 	// 27
@@ -347,7 +351,7 @@ void ModuleSceneIntro::CreateCircuit()
 	App->physics->AddBody(*sphere, 0.0f);
 
 	// 29
-	Sphere* sphere2 = new Sphere(2.5);
+	Sphere* sphere2 = new Sphere(5);
 	sphere2->SetPos(0, 20, 90);
 	primitives.PushBack(sphere2);
 	App->physics->AddBody(*sphere2, 100.0f);
@@ -424,7 +428,7 @@ void ModuleSceneIntro::CreateCircuit()
 	App->physics->AddBody(*sphere3, 0.0f);
 
 	// 40
-	Sphere* sphere4 = new Sphere(3.5);
+	Sphere* sphere4 = new Sphere(5);
 	sphere4->SetPos(210, 25, 45);
 	primitives.PushBack(sphere4);
 	App->physics->AddBody(*sphere4, 100.0f);
@@ -467,23 +471,23 @@ void ModuleSceneIntro::CreateCircuit()
 	// Balls for constraints links
 	// 28
 	Sphere* sphere5 = new Sphere(1);
-	sphere5->SetPos(150, 35, -100);
+	sphere5->SetPos(150, 47, -100);
 	primitives.PushBack(sphere5);
 	App->physics->AddBody(*sphere5, 0.0f);
 
 	// 29
-	Sphere* sphere6 = new Sphere(3.5);
+	Sphere* sphere6 = new Sphere(5);
 	sphere6->SetPos(150, 17, -100);
 	primitives.PushBack(sphere6);
 	App->physics->AddBody(*sphere6, 1000000.0f);
-	sphere6->body->Push(-100000000.0f, 0.0f, 0.0f);
+	sphere6->body->Push(25000000.0f, 0.0f, 0.0f);
 	sphere6->color = { 1,1,0,1 };
 
 	// 30
 	Sphere* sphere7 = new Sphere(10);
 	sphere7->SetPos(110, 15, -100);
 	primitives.PushBack(sphere7);
-	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE, App->player, true);
+	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE);
 	sphere7->color = { 1,0,0,1 };
 
 	// 31
@@ -497,7 +501,7 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere9->SetPos(90, 15, -100);
 	primitives.PushBack(sphere9);
 	App->physics->AddBody(*sphere9, 10.0f, ElementType::DAMAGE, App->player, true);
-	sphere9->body->Push(0.0f, 0.0f, 1000.0f);
+	sphere9->body->Push(0.0f, 0.0f, 100000.0f);
 	sphere9->color = { 1,0,0,1 };
 
 	// 33
@@ -511,7 +515,7 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere11->SetPos(70, 15, -100);
 	primitives.PushBack(sphere11);
 	App->physics->AddBody(*sphere11, 10.0f, ElementType::DAMAGE, App->player, true);
-	sphere11->body->Push(0.0f, 0.0f, -1000.0f);
+	sphere11->body->Push(0.0f, 0.0f, -100000.0f);
 	sphere11->color = { 1,0,0,1 };
 
 	// 35
@@ -525,7 +529,7 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere13->SetPos(50, 15, -100);
 	primitives.PushBack(sphere13);
 	App->physics->AddBody(*sphere13, 10.0f, ElementType::DAMAGE, App->player, true);
-	sphere13->body->Push(0.0f, 0.0f, 1000.0f);
+	sphere13->body->Push(0.0f, 0.0f, 100000.0f);
 	sphere13->color = { 1,0,0,1 };
 
 	// 37

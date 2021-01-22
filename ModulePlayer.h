@@ -43,13 +43,13 @@ public:
 	vec3 carDir = { 0,0,0 };
 	vec3 cameraPos = { 0,0,0 };
 
+	Timer lapTimer;
+	int secondsPassed = 0;
+	int minutesPassed = 0;
+
 private:
 
 	float* initialTransf;
 
 	Timer jumpCooldown;
-
-	Timer lapTimer;
-	int secondsPassed = 0;
-	int minutesPassed = 0;
 };
