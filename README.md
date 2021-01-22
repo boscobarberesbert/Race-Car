@@ -2,7 +2,7 @@
 
 ## Description
 
-Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet and OenGL and SDL as the render tools.
+Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet for the physics, and OpenGL and SDL as the render tools.
 
 ## Key Features
 
