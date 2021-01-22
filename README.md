@@ -1,6 +1,7 @@
 # Race Car | B.A.T. Studios
 
 Link to the repository: [B.A.T. Studios' Race Car in GitHub](https://github.com/boscobarberesbert/Race-Car)
+
 Link to the latest release: [Race Car newest release](https://github.com/boscobarberesbert/Race-Car/releases/tag/v1.0)
 
 ## Description
