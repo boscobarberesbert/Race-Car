@@ -97,10 +97,12 @@ void Application::FinishUpdate()
 	Uint32 framesOnLastSec = prevLastSecFrameCount;
 
 	static char titleDebug[256];
-	sprintf_s(titleDebug, 256, "| Last Second frames: %i | Last Frame Ms: %02u | Last dt: %.3f | Framerate Cap: %d |", framesOnLastSec, lastFrameMs, dt, (1000 / cappedMs));
+	sprintf_s(titleDebug, 256, "| Last Second frames: %i | Last Frame (ms): %02u | Last dt (s): %.3f | Framerate Cap (ms): %d |", framesOnLastSec, lastFrameMs, dt, (1000 / cappedMs));
 
 	if (debug)
 		window->SetTitle(titleDebug);
+	else
+		window->SetTitle("Race Car | B.A.T. Studios");
 
 	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
 	{
