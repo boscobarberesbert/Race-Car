@@ -1,5 +1,7 @@
 # Race Car | B.A.T. Studios
 
+Link to the source: [B.A.T. Studios' Race Car in GitHub](https://github.com/boscobarberesbert/Race-Car)
+
 ## Description
 
 Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been developed with Bullet for the physics, and OpenGL and SDL as the render tools.
