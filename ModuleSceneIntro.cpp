@@ -464,7 +464,7 @@ void ModuleSceneIntro::CreateCircuit()
 
 	// Death catwalk Square
 	// 44
-	Cube* deathCatwalkSquare = new Cube(27, 1, 27);
+	Cube* deathCatwalkSquare = new Cube(30, 1, 30);
 	deathCatwalkSquare->SetPos(110, 11, -100);
 	primitives.PushBack(deathCatwalkSquare);
 	App->physics->AddBody(*deathCatwalkSquare, 0.0f);
@@ -492,7 +492,7 @@ void ModuleSceneIntro::CreateCircuit()
 	sphere6->color = { 1,1,0,1 };
 
 	// 48
-	Sphere* sphere7 = new Sphere(10);
+	Sphere* sphere7 = new Sphere(11);
 	sphere7->SetPos(110, 11, -100);
 	primitives.PushBack(sphere7);
 	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE);
