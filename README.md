@@ -16,8 +16,6 @@ Race Car game developed by 3 students at CITM-UPC, in Barcelona. It has been dev
 
 ## Key Features
 
-## Key Features
-
  - Scenario and ground, with platforms and traps.
  - The world has gravity.
  - Car moves with player input.
